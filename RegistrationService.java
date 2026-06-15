@@ -33,7 +33,8 @@ public class RegistrationService {
         for (Course c : courses) {
 
             if (c.getCourseName()
-                    .equalsIgnoreCase(keyword)) {
+                    .toLowerCase()
+                    .contains(keyword.toLowerCase())) {
 
                 System.out.println("\nCourse Found:");
                 c.display();
@@ -151,6 +152,17 @@ public class RegistrationService {
             ArrayList<Course> courses,
             Course c) {
 
+        for (Course existingCourse : courses) {
+
+            if (existingCourse.getCourseId() == c.getCourseId()) {
+
+                System.out.println(
+                        "Course ID Already Exists.");
+
+                return;
+            }
+        }
+
         courses.add(c);
 
         System.out.println(
@@ -192,6 +204,11 @@ public class RegistrationService {
             HashMap<Integer, Student> students,
             Student s) {
 
+        if (students.containsKey(s.getId())) {
+            System.out.println("Student ID Already Exists.");
+            return;
+        }
+
         students.put(
                 s.getId(),
                 s);
@@ -199,7 +216,6 @@ public class RegistrationService {
         System.out.println(
                 "Student Added Successfully.");
     }
-
     // ==========================
     // VIEW STUDENTS
     // ==========================
