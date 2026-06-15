@@ -25,8 +25,8 @@ public class Student extends Person {
     public void displayProfile() {
 
         System.out.println("\n===== Student Profile =====");
-        System.out.println("Student ID : " + id);
-        System.out.println("Student Name : " + name);
+        System.out.println("Student ID : " + getId());
+        System.out.println("Student Name : " + getName());
         System.out.println("Total Registered Courses : "
                 + registeredCourses.size());
     }
@@ -34,6 +34,6 @@ public class Student extends Person {
     @Override
     public void dashboard() {
         System.out.println("\n===== Student Dashboard =====");
-        System.out.println("Welcome, " + name);
+        System.out.println("Welcome, " + getName());
     }
 }
