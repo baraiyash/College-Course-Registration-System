@@ -126,6 +126,8 @@ View Courses
 ```text
 CollegeCourseRegistrationSystem
 │
+├── README.md
+├── .gitignore
 ├── Main.java
 ├── Person.java
 ├── Student.java
@@ -203,5 +205,3 @@ Through this project, the following concepts were implemented and understood:
 ## 👨‍💻 Author
 
 Yash Barai
-
-MCA Student
