@@ -1,10 +1,12 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class RegistrationService {
 
-    // ==============================
+    // ==========================
     // VIEW ALL COURSES
-    // ==============================
+    // ==========================
     public void showCourses(ArrayList<Course> courses) {
 
         if (courses.isEmpty()) {
@@ -19,19 +21,23 @@ public class RegistrationService {
         }
     }
 
-    // ==============================
+    // ==========================
     // SEARCH COURSE
-    // ==============================
-    public void searchCourse(ArrayList<Course> courses, String keyword) {
+    // ==========================
+    public void searchCourse(
+            ArrayList<Course> courses,
+            String keyword) {
 
         boolean found = false;
 
         for (Course c : courses) {
 
-            if (c.getCourseName().equalsIgnoreCase(keyword)) {
+            if (c.getCourseName()
+                    .equalsIgnoreCase(keyword)) {
 
                 System.out.println("\nCourse Found:");
                 c.display();
+
                 found = true;
             }
         }
@@ -41,20 +47,25 @@ public class RegistrationService {
         }
     }
 
-    // ==============================
+    // ==========================
     // REGISTER COURSE
-    // ==============================
-    public void registerCourse(Student s, Course c)
+    // ==========================
+    public void registerCourse(
+            Student s,
+            Course c)
+
             throws CourseFullException,
             AlreadyRegisteredException,
             CourseLimitExceededException {
 
+        // Course Limit Check
         if (s.getRegisteredCourses().size() >= s.getMaxCourses()) {
 
             throw new CourseLimitExceededException(
                     "Maximum Course Limit Reached!");
         }
 
+        // Duplicate Check
         for (Course x : s.getRegisteredCourses()) {
 
             if (x.getCourseId() == c.getCourseId()) {
@@ -64,6 +75,7 @@ public class RegistrationService {
             }
         }
 
+        // Seat Check
         if (c.getSeats() <= 0) {
 
             throw new CourseFullException(
@@ -78,10 +90,12 @@ public class RegistrationService {
                 "Course Registered Successfully.");
     }
 
-    // ==============================
+    // ==========================
     // DROP COURSE
-    // ==============================
-    public void dropCourse(Student s, int courseId) {
+    // ==========================
+    public void dropCourse(
+            Student s,
+            int courseId) {
 
         Iterator<Course> it = s.getRegisteredCourses().iterator();
 
@@ -106,10 +120,11 @@ public class RegistrationService {
                 "Course Not Found.");
     }
 
-    // ==============================
-    // SHOW REGISTERED COURSES
-    // ==============================
-    public void showRegisteredCourses(Student s) {
+    // ==========================
+    // VIEW REGISTERED COURSES
+    // ==========================
+    public void showRegisteredCourses(
+            Student s) {
 
         if (s.getRegisteredCourses().isEmpty()) {
 
@@ -129,9 +144,9 @@ public class RegistrationService {
         }
     }
 
-    // ==============================
+    // ==========================
     // ADD COURSE
-    // ==============================
+    // ==========================
     public void addCourse(
             ArrayList<Course> courses,
             Course c) {
@@ -142,9 +157,9 @@ public class RegistrationService {
                 "Course Added Successfully.");
     }
 
-    // ==============================
+    // ==========================
     // REMOVE COURSE
-    // ==============================
+    // ==========================
     public void removeCourse(
             ArrayList<Course> courses,
             int courseId) {
@@ -170,50 +185,24 @@ public class RegistrationService {
                 "Course Not Found.");
     }
 
-    // ==============================
-    // UPDATE COURSE
-    // ==============================
-    public void updateCourse(
-            ArrayList<Course> courses,
-            int courseId,
-            String newName,
-            int newSeats) {
-
-        for (Course c : courses) {
-
-            if (c.getCourseId() == courseId) {
-
-                c.setCourseName(newName);
-
-                c.setSeats(newSeats);
-
-                System.out.println(
-                        "Course Updated Successfully.");
-
-                return;
-            }
-        }
-
-        System.out.println(
-                "Course Not Found.");
-    }
-
-    // ==============================
+    // ==========================
     // ADD STUDENT
-    // ==============================
+    // ==========================
     public void addStudent(
             HashMap<Integer, Student> students,
             Student s) {
 
-        students.put(s.id, s);
+        students.put(
+                s.getId(),
+                s);
 
         System.out.println(
                 "Student Added Successfully.");
     }
 
-    // ==============================
+    // ==========================
     // VIEW STUDENTS
-    // ==============================
+    // ==========================
     public void viewStudents(
             HashMap<Integer, Student> students) {
 
@@ -231,82 +220,9 @@ public class RegistrationService {
         for (Student s : students.values()) {
 
             System.out.println(
-                    "ID : " + s.id +
-                            " | Name : " + s.name);
+                    "ID : " + s.getId()
+                            + " | Name : "
+                            + s.getName());
         }
-    }
-
-    // ==============================
-    // VIEW STUDENT REGISTRATIONS
-    // ==============================
-    public void viewStudentRegistrations(
-            Student s) {
-
-        System.out.println(
-                "\nStudent : " + s.name);
-
-        if (s.getRegisteredCourses().isEmpty()) {
-
-            System.out.println(
-                    "No Courses Registered.");
-
-            return;
-        }
-
-        for (Course c : s.getRegisteredCourses()) {
-
-            System.out.println(
-                    c.getCourseName());
-        }
-    }
-
-    // ==============================
-    // COURSE SEAT REPORT
-    // ==============================
-    public void seatAvailabilityReport(
-            ArrayList<Course> courses) {
-
-        System.out.println(
-                "\n===== Seat Availability Report =====");
-
-        for (Course c : courses) {
-
-            System.out.println(
-                    c.getCourseId()
-                            + " | "
-                            + c.getCourseName()
-                            + " | Seats : "
-                            + c.getSeats());
-        }
-    }
-
-    // ==============================
-    // SORT BY NAME
-    // ==============================
-    public void sortCoursesByName(
-            ArrayList<Course> courses) {
-
-        Collections.sort(
-                courses,
-                Comparator.comparing(
-                        Course::getCourseName));
-
-        System.out.println(
-                "Courses Sorted By Name.");
-    }
-
-    // ==============================
-    // SORT BY SEATS
-    // ==============================
-    public void sortCoursesBySeats(
-            ArrayList<Course> courses) {
-
-        Collections.sort(
-                courses,
-                Comparator.comparingInt(
-                        Course::getSeats));
-
-        System.out.println(
-                "Courses Sorted By Seats.");
     }
 }
